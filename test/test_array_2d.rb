@@ -57,6 +57,10 @@ class Array2DTest < Test::Unit::TestCase
     subarray.state = [[0, 1], [2, 3]]
     array2d[0...2, 1...3] = subarray
     assert_equal subarray, array2d[0...2, 1...3]
+
+    array2d[0...2, 1...3] = 5
+    subarray = Array2D.new(2, 2, 5)
+    assert_equal subarray, array2d[0...2, 1...3]
   end
 
   def test_bracket_with_integers_and_ranges
@@ -65,5 +69,11 @@ class Array2DTest < Test::Unit::TestCase
 
     @array2d[0, 0..1] = [2, 3]  
     assert_equal [2, 3], @array2d[0, 0..1]
+
+    @array2d[0...3, 0] = 5
+    assert_equal [5, 5, 5], @array2d[0...3, 0]
+
+    @array2d[0, 0...5] = 7
+    assert_equal [7, 7, 7, 7, 7], @array2d[0, 0...5]
   end
 end

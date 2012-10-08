@@ -78,20 +78,32 @@ class Array2D
       when Integer
         @state[x][y] = value
       when Range
-        y.each {|yi| @state[x][yi] = value[yi - y.first]}    
+        if value.is_a?(Array) && y.to_a.size == value.size
+          y.each {|yi| @state[x][yi] = value[yi - y.first]}
+        else
+          y.each {|yi| @state[x][yi] = value}
+        end    
       end
     when Range
       case y
       when Integer
-        x.each {|xi| @state[xi][y] = value[xi - x.first]}
+        if value.is_a?(Array) && x.to_a.size == value.size
+          x.each {|xi| @state[xi][y] = value[xi - x.first]}
+        else
+          x.each {|xi| @state[xi][y] = value}
+        end
       when Range
         x.each do |xi|
           y.each do |yi|
-            @state[xi][yi] = value[xi - x.first, yi - y.first]
+            if value.is_a?(Array2D) && [x.to_a.size, y.to_a.size] == value.size
+              @state[xi][yi] = value[xi - x.first, yi - y.first]
+            else
+              @state[xi][yi] = value
+            end
           end
         end
       end
     end
   end
-  
+
 end
