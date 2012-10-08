@@ -31,7 +31,7 @@ class Array2D
   end
 
   def size
-    [@state.size, @state[0].size]
+    [row_size, column_size]
   end
 
   def row_size
@@ -40,29 +40,6 @@ class Array2D
 
   def column_size
     @state[0].size
-  end
-
-  def []=(x, y, value)
-    case x
-    when Integer
-      case y
-      when Integer
-        @state[x][y] = value
-      when Range
-        y.each {|yi| @state[x][yi] = value[yi - y.first]}    
-      end
-    when Range
-      case y
-      when Integer
-        x.each {|xi| @state[xi][y] = value[xi - x.first]}
-      when Range
-        x.each do |xi|
-          y.each do |yi|
-            @state[xi][yi] = value[xi - x.first, yi - y.first]
-          end
-        end
-      end
-    end
   end
 
   def [](x, y)
@@ -93,4 +70,28 @@ class Array2D
       end
     end
   end
+
+  def []=(x, y, value)
+    case x
+    when Integer
+      case y
+      when Integer
+        @state[x][y] = value
+      when Range
+        y.each {|yi| @state[x][yi] = value[yi - y.first]}    
+      end
+    when Range
+      case y
+      when Integer
+        x.each {|xi| @state[xi][y] = value[xi - x.first]}
+      when Range
+        x.each do |xi|
+          y.each do |yi|
+            @state[xi][yi] = value[xi - x.first, yi - y.first]
+          end
+        end
+      end
+    end
+  end
+  
 end
