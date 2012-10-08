@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Luke Grecki"]
   s.date = "2012-10-08"
-  s.description = "With this class you can create mutable 2D arrays and change subarrays."
+  s.description = "Create mutable 2D arrays that allow you to change subarrays."
   s.email = "lukegrecki@gmail.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -33,7 +33,7 @@ Gem::Specification.new do |s|
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.10"
-  s.summary = "A lightweight mutabke 2D array class"
+  s.summary = "A lightweight mutable 2D array class"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
