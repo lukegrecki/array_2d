@@ -1,16 +1,88 @@
 = array_2d
 
-Description goes here.
+A lightweight mutable 2D array class that allows you to extract and change subarrays. I created it to get around the fact that the ruby core Matrix objects are immutable.
 
-== Contributing to array_2d
- 
-* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
-* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
-* Fork the project.
-* Start a feature/bugfix branch.
-* Commit and push until you are happy with your contribution.
-* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
-* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+== Install
+
+  gem install array_2d
+
+== Usage
+
+=== Create and modify
+
+  array2d = Array2D.new(2, 3)
+  => [[nil, nil, nil], [nil, nil, nil]]
+
+  array2d = Array2D.new(2, 3, 0)
+  => [[0, 0, 0], [0, 0, 0]]
+
+  array2d.state = [[1, 2, 3], [4, 5, 6]]
+  => [[1, 2, 3], [4, 5, 6]]
+
+=== Get size
+
+  array2d.size
+  => [2, 3]
+
+  array2d.row_size
+  => 2
+
+  array2d.column_size
+  => 3
+
+=== Get values
+
+  array2d[0, 2]
+  => 3
+
+  array2d[1, 0..1]
+  => [4, 5]
+
+  array2d[0..1, 0..1]
+  => [[1, 2], [4, 5]]
+
+  # Using two ranges returns another 2d array
+  array2d[0..1, 0..1].class
+  => Array2D
+
+=== Set values
+
+  array2d[0, 2] = 11
+
+  array2d
+  => [[1, 2, 11], [4, 5, 6]]
+
+  # You can set using a single value or a proper size array
+  array2d[1, 0..1] = 9
+  array2d
+  => [[1, 2, 11], [9, 9, 6]]
+
+  array2d[1, 0..1] = [99, 100]
+  array2d
+  => [[1, 2, 11], [99, 100, 6]]
+
+  # To set a 2d subarray you must use a single value or another Array2D object
+  array2d[0..1, 0..1] = 44
+  array2d
+  => [[44, 44, 11], [44, 44, 6]]
+
+  new_subarray = Array2D.new(2, 2)
+  new_subarray.state = [[55, 66], [77, 88]]
+  array2d[0..1, 0..1] = new_subarray
+  array2d
+  => [[55, 66, 11], [77, 88, 6]]
+
+=== Enumerate
+
+  # 'Each' goes through the 2d array from left to right, top to bottom
+  array2d.state = [[1, 2, 3], [4, 5, 6]]
+  array2d.each {|e| puts e}
+  1
+  2
+  3
+  4
+  5
+  6
 
 == Copyright
 

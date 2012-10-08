@@ -16,8 +16,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "array_2d"
   gem.homepage = "http://github.com/lukegrecki/array_2d"
   gem.license = "MIT"
-  gem.summary = "A lightweight mutabke 2D array class"
-  gem.description = "With this class you can create mutable 2D arrays and change subarrays."
+  gem.summary = "A lightweight mutable 2D array class"
+  gem.description = "Create mutable 2D arrays that allow you to change subarrays."
   gem.email = "lukegrecki@gmail.com"
   gem.authors = ["Luke Grecki"]
   # dependencies defined in Gemfile
