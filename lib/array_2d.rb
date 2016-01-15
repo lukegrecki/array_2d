@@ -90,8 +90,10 @@ class Array2D
       when Integer
         @state[x][y] = value
       when Range
-        if value.is_a?(Array) && y.to_a.size == value.size
+        if value.is_a?(Array) && y.size == value.size
           y.each {|yi| @state[x][yi] = value[yi - y.first]}
+        elsif value.is_a?(Array) && y.size != value.size
+          raise AssignmentError, "Value array is not the same size as subarray"
         else
           y.each {|yi| @state[x][yi] = value}
         end    
@@ -99,16 +101,20 @@ class Array2D
     when Range
       case y
       when Integer
-        if value.is_a?(Array) && x.to_a.size == value.size
+        if value.is_a?(Array) && x.size == value.size
           x.each {|xi| @state[xi][y] = value[xi - x.first]}
+        elsif value.is_a?(Array) && x.size != value.size
+          raise AssignmentError, "Value array is not the same size as subarray"
         else
           x.each {|xi| @state[xi][y] = value}
         end
       when Range
         x.each do |xi|
           y.each do |yi|
-            if value.is_a?(Array2D) && [x.to_a.size, y.to_a.size] == value.size
+            if value.is_a?(Array2D) && [x.size, y.size] == value.size
               @state[xi][yi] = value[xi - x.first, yi - y.first]
+            elsif value.is_a?(Array2D) && [x.size, y.size] != value.size
+              raise AssignmentError, "Value 2d array is not the same size as subarray"
             else
               @state[xi][yi] = value
             end
@@ -121,3 +127,4 @@ class Array2D
 end
 
 class IndexError < StandardError; end
+class AssignmentError < StandardError; end

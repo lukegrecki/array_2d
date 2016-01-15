@@ -104,4 +104,18 @@ class Array2DTest < Minitest::Test
       @array2d[0..(@array2d.row_size + 1), 0..(@array2d.column_size + 1)]
     end
   end
+
+  def test_set_bracket_errors
+    assert_raises(AssignmentError) do
+      @array2d[0..(@array2d.row_size), 0] = Array.new(@array2d.row_size, 0)
+    end
+
+    assert_raises(AssignmentError) do
+      @array2d[0, 0..(@array2d.column_size)] = Array.new(@array2d.column_size + 2, 0)
+    end
+
+    assert_raises(AssignmentError) do
+      @array2d[0..(@array2d.row_size), 0..(@array2d.column_size)] = Array2D.new(@array2d.row_size + 2, @array2d.column_size + 2)
+    end
+  end
 end
