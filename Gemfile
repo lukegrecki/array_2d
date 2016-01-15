@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
+ruby '2.2.2'
 
 group :development do
   gem 'rdoc'
-  gem 'bundler'
   gem 'jeweler'
 end
