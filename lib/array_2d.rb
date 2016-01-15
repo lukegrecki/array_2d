@@ -49,24 +49,36 @@ class Array2D
       when Integer
         @state[x][y]
       when Range
-        subarray = Array.new(y.to_a.size)
-        y.each {|yi| subarray[yi - y.first] = @state[x][yi]}
-        subarray
+        if y.size <= column_size
+          subarray = Array.new(y.to_a.size)
+          y.each {|yi| subarray[yi - y.first] = @state[x][yi]}
+          subarray
+        else
+          raise IndexError, "Indices are out of range"
+        end
       end
     when Range
       case y
       when Integer
-        subarray = Array.new(x.to_a.size)
-        x.each {|xi| subarray[xi - x.first] = @state[xi][y]}
-        subarray
-      when Range
-        subarray = Array2D.new(x.to_a.size, y.to_a.size)
-        x.each do |xi|
-          y.each do |yi|
-            subarray.state[xi - x.first][yi - y.first] = @state[xi][yi]
-          end
+        if x.size <= row_size
+          subarray = Array.new(x.to_a.size)
+          x.each {|xi| subarray[xi - x.first] = @state[xi][y]}
+          subarray
+        else
+          raise IndexError, "Indices are out of range"
         end
-        subarray
+      when Range
+        if x.size <= row_size && y.size <= column_size
+          subarray = Array2D.new(x.to_a.size, y.to_a.size)
+          x.each do |xi|
+            y.each do |yi|
+              subarray.state[xi - x.first][yi - y.first] = @state[xi][yi]
+            end
+          end
+          subarray
+        else
+          raise IndexError, "Indices are out of range"
+        end
       end
     end
   end
@@ -107,3 +119,5 @@ class Array2D
   end
 
 end
+
+class IndexError < StandardError; end

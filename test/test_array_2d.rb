@@ -10,21 +10,35 @@ class Array2DTest < Minitest::Test
     assert_instance_of Array2D, Array2D.new(3, 5, 0)
   end
 
+  def test_initial_value
+    assert_equal 0, @array2d[2, 2]
+  end
+
   def test_each
-    @array2d.each {|e| assert_equal(0, e)}
+    array2d = Array2D.new(2, 2)
+    array2d.state = [[1, 2], [3, 4]]
+    each_array = []
+    array2d.each { |e| each_array << e }
+    assert_equal [1, 2, 3, 4], each_array
   end
 
   def test_each_with_index
-    @array2d.each_with_index do |e, index| 
-      assert_equal 0, e
-      assert_instance_of Array, index
-      assert_equal 2, index.size
+    array2d = Array2D.new(2, 2)
+    array2d.state = [[1, 2], [3, 4]]
+    each_array = []
+    index_array = []
+    array2d.each_with_index do |e, index|
+      each_array << e 
+      index_array << index
     end
+    assert_equal [1, 2, 3, 4], each_array
+    assert_equal [[0, 0], [0, 1], [1, 0], [1, 1]], index_array
   end
 
   def test_to_s
-    array2d = Array2D.new(2, 2, 0)
-    assert_equal '[[0, 0], [0, 0]]', array2d.to_s
+    array2d = Array2D.new(2, 2)
+    array2d.state = [[1, 2], [3, 4]]
+    assert_equal '[[1, 2], [3, 4]]', array2d.to_s
   end
 
   def test_equality
@@ -75,5 +89,19 @@ class Array2DTest < Minitest::Test
 
     @array2d[0, 0...5] = 7
     assert_equal [7, 7, 7, 7, 7], @array2d[0, 0...5]
+  end
+
+  def test_get_bracket_errors
+    assert_raises(IndexError) do
+      @array2d[0..(@array2d.row_size + 1), 0]
+    end
+
+    assert_raises(IndexError) do
+      @array2d[0, 0..(@array2d.column_size + 1)]
+    end
+
+    assert_raises(IndexError) do
+      @array2d[0..(@array2d.row_size + 1), 0..(@array2d.column_size + 1)]
+    end
   end
 end
