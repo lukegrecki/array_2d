@@ -1,6 +1,6 @@
 require 'helper'
 
-class Array2DTest < Test::Unit::TestCase
+class Array2DTest < Minitest::Test
   def setup
     @array2d = Array2D.new(3, 5, 0)
   end
